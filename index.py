@@ -46,7 +46,7 @@ async def level_setter(message, historic = False) :
 async def test(ctx, left : int, right : int):
     await ctx.send(left+right)
 
-@bot.command(aliases =  ['역할제공' ,'역할부여'])
+@bot.command(aliases =  ['역할제공' ,'역할부여','giverole'])
 async def role_give(ctx, nickname : discord.Member, *args) :
     print('---role_give_start---')
     role_name = ' '.join(args)
@@ -64,8 +64,8 @@ async def role_give(ctx, nickname : discord.Member, *args) :
         await ctx.channel.send('오류발생 : 멘션이 제대로 되었는지, 역할이 생성 되어있는지 확인 후 관리자에게 문의하세요')
     print('---role_give_end---')
 
-@bot.command(aliases =  ['역할제거','역할뺏기'] )
-async def role_remove(ctx, nickname : discord.Member, *args) :
+@bot.command(aliases =  ['역할제거','역할뺏기','removerole'] )
+async def user_remove_role(ctx, nickname : discord.Member, *args) :
     print('---role_remove_start---')
     role_name = ' '.join(args)
     is_not_done = True
@@ -93,8 +93,8 @@ async def role_create(ctx, *args) :
     print('created_role : ', x.name)
     print('---role_create_end---')
 
-@bot.command(name =  '역할삭제' )
-async def role_delete(ctx, *args) :
+@bot.command(aliases =  '역할삭제' )
+async def server_delete_role(ctx, *args) :
     print('---role_delete_start---')
     role_name = ' '.join(args)
     reason = f'requested by {ctx.author.nick} | BOT controller)'
@@ -106,7 +106,7 @@ async def role_delete(ctx, *args) :
             await ctx.channel.send(f'{i.name} 역할 삭제 완료')
     print('---role_delete_end---')
 
-@bot.command(name = '레벨역할기록읽기')
+@bot.command(aliases = ['레벨역할기록읽기','readlevelhistory'])
 async def load_history(ctx,count:int) :
     print('---load_history_start---')
     contexts = await bot.get_context(ctx.message)
