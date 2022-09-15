@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands, tasks
 from itertools import cycle
-from to2 import Token
+from to2 import Token #take token from to2
 
 intents = discord.Intents.all()
 bot=commands.Bot(command_prefix='/', intents=intents)
