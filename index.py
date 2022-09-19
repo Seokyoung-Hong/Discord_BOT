@@ -93,7 +93,7 @@ async def role_create(ctx, *args) :
     print('created_role : ', x.name)
     print('---role_create_end---')
 
-@bot.command(aliases =  '역할삭제' )
+@bot.command(aliases =  ['역할삭제','deleterole'] )
 async def server_delete_role(ctx, *args) :
     print('---role_delete_start---')
     role_name = ' '.join(args)
