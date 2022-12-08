@@ -16,21 +16,14 @@ async def level_setter(message, historic = False) :
         level = int(x.split('**')[0])
         levellist = [0,4,7,10,13,16]
         print(level)
-        if level >= 16 :
-            if level %2 == 1 :
-                if historic :
-                    level-=1
-                else :
-                    return
-        else :
-            if level not in levellist :
-                if historic :
-                    for i in range(len(levellist)) :
-                        if levellist[i] < level :
-                            level = levellist[i]
-                else :
-                    return
-        role_name = f'레벨 {level}'
+        target_level = level
+        for i in range(level+1):
+            if i in levellist:
+                target_level = i
+            elif i >= 16 and i%2 == 0 :
+                target_level = i
+        
+        role_name = f'레벨 {target_level}'
         for i in message.guild.roles :
             if '레벨' in str(i.name) and i in member.roles:
                 print('기존 레벨 삭제',member.nick,i.name)
@@ -107,7 +100,7 @@ async def server_delete_role(ctx, *args) :
     print('---role_delete_end---')
 
 @bot.command(aliases = ['레벨역할기록읽기','readlevelhistory'])
-async def load_history(ctx,count:int) :
+async def load_history(ctx,count:int = 10) :
     print('---load_history_start---')
     contexts = await bot.get_context(ctx.message)
     print(contexts.channel.name)
@@ -125,10 +118,7 @@ async def load_history(ctx,count:int) :
 # async def role_edit(ctx, role_name, what, )
 
 
-status = cycle(['controller','/도움 안 먹혀 걱정마'])
-@tasks.loop(seconds=4)
-async def change_status():
-    await bot.change_presence(activity = discord.Game(next(status)))
+
 
 
 @bot.event
@@ -136,8 +126,8 @@ async def on_ready():
     print('로그인중입니다. ')
     print(f"봇={bot.user.name}로 연결중")
     print('연결이 완료되었습니다.')
-    change_status.start()
-    await bot.change_presence(status=discord.Status.online, activity=discord.Game("!예측 으로 내일 확진자수 예측"))
+    # change_status.start()
+    await bot.change_presence(status=discord.Status.online, activity=discord.Game("controller"))
 
 
     
